@@ -49,12 +49,12 @@ export const PlantCard: React.FC<PlantCardProps> = ({
                                 sensorDataList.length > 0 && (
                                     <div className="mt-4 space-y-1">
                                         <Text size="sm">
-                                            土壤濕度:{" "}
+                                            {/* 土壤濕度:{" "}
                                             {
                                                 sensorDataList.at(-1)
                                                     ?.soilMoisture
                                             }
-                                            %
+                                            % */}
                                         </Text>
                                         <Text size="sm">
                                             溫度:{" "}
