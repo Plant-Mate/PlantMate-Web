@@ -35,15 +35,16 @@ export default function Home() {
                             cols={{ base: 1, sm: 2, md: 3 }}
                             spacing="md"
                         >
-                            {(plants ?? []).map((plant) => (
-                                <PlantCard
-                                    key={plant.id}
-                                    plant={plant}
-                                    onLinkSensor={(
-                                        plantId: string,
-                                        sensorId: string
-                                    ) => linkSensor({ plantId, sensorId })}
-                                />
+                            {(plants ?? []).map((plant, _) => (
+                                <div key={_}>
+                                    <PlantCard
+                                        plant={plant}
+                                        onLinkSensor={(
+                                            plantId: string,
+                                            sensorId: string
+                                        ) => linkSensor({ plantId, sensorId })}
+                                    />
+                                </div>
                             ))}
                         </SimpleGrid>
                     )}
