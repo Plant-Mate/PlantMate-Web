@@ -12,10 +12,11 @@ import {
     TextInput,
 } from "@mantine/core";
 import { AppHeader } from "../../../view/ui/AppHeader";
-import { usePlants } from "../../../viewmodels/usePlants";
 import { Plant } from "../../../models/entity/Plant";
 import { PlantChatSection } from "../../../view/ui/PlantChatSection";
 import { PlantDataSection } from "../../../view/ui/PlantDataSection";
+import { usePlantsQuery } from "@/viewmodels/hooks/usePlantsQuery";
+import { usePlantMutations } from "@/viewmodels/hooks/usePlantMutation";
 
 interface PlantDetailPageProps {
     params: {
@@ -25,11 +26,12 @@ interface PlantDetailPageProps {
 
 export default function PlantDetailPage({ params }: PlantDetailPageProps) {
     // 使用 React.use() 解析 params
-    const resolvedParams = React.use(params as any);
-    const id = resolvedParams.id;
+    // const resolvedParams = React.use(params as any);
+    const id = params.id;
 
     const router = useRouter();
-    const { getPlantById, updatePlant } = usePlants();
+    const { data: plants } = usePlantsQuery();
+    const { updatePlantAsync } = usePlantMutations();
     const [plant, setPlant] = useState<Plant | null>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [editData, setEditData] = useState({
@@ -37,22 +39,22 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
         species: "",
         description: "",
     });
-    const [addModalOpen, setAddModalOpen] = useState(false);
+    const [, setAddModalOpen] = useState(false);
 
     useEffect(() => {
-        const plantData = getPlantById(id);
-        if (plantData) {
-            setPlant(plantData);
+        const plant = plants?.find((p) => p.id === id);
+        if (plant) {
+            setPlant(plant);
             setEditData({
-                name: plantData.name,
-                species: plantData.species,
-                description: plantData.description || "",
+                name: plant.name,
+                species: plant.species,
+                description: plant.description || "",
             });
         } else {
             // 找不到植物資料，返回主頁
             // router.push("/");
         }
-    }, [id, getPlantById, router]);
+    }, [id, plants, router]);
 
     const handleEditChange =
         (field: keyof typeof editData) =>
@@ -63,13 +65,17 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
             });
         };
 
-    const handleSaveChanges = () => {
-        if (plant) {
-            const updatedPlant = updatePlant(plant.id, editData);
-            if (updatedPlant) {
-                setPlant(updatedPlant);
-                setIsEditing(false);
-            }
+    const handleSaveChanges = async () => {
+        if (!plant) return;
+
+        const updatedPlant = await updatePlantAsync({
+            id: plant.id,
+            data: editData,
+        });
+
+        if (updatedPlant) {
+            setPlant(updatedPlant);
+            setIsEditing(false);
         }
     };
 

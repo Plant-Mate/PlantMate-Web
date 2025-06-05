@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllPlants } from "@/services/plantService";
 import { PlantResponse } from "@/models/dto/PlantDto";
 
-export const usePlants = () => {
+export const usePlantsQuery = () => {
     return useQuery<PlantResponse[], Error>({
         queryKey: ["plants"],
         queryFn: getAllPlants,
