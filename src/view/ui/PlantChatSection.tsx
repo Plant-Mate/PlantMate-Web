@@ -1,28 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Paper, TextInput, Button, Text, ScrollArea } from "@mantine/core";
-
-interface Message {
-    id: string;
-    text: string;
-    sender: "user" | "plant";
-    timestamp: Date;
-}
+import { ChatMessageRequest } from "@/models/dto/ChatMessageDto";
+import { usePlantMessages } from "@/viewmodels/hooks/usePlantMessagesQuery";
+import { useAddPlantMessage } from "@/viewmodels/hooks/usePlantMessageMutation";
 
 interface PlantChatSectionProps {
-    plantName: string;
+    plantId: string;
 }
 
 export const PlantChatSection: React.FC<PlantChatSectionProps> = ({
-    plantName,
+    plantId,
 }) => {
-    const [messages, setMessages] = useState<Message[]>([
-        {
-            id: "1",
-            text: `你好！我是${plantName}，今天感覺如何？`,
-            sender: "plant",
-            timestamp: new Date(),
-        },
-    ]);
+    const { data: messages = [] } = usePlantMessages(plantId);
+    const addMessageMutation = useAddPlantMessage(plantId);
     const [newMessage, setNewMessage] = useState("");
     const viewport = useRef<HTMLDivElement>(null);
 
@@ -39,41 +29,13 @@ export const PlantChatSection: React.FC<PlantChatSectionProps> = ({
         if (!newMessage.trim()) return;
 
         // 新增使用者訊息
-        const userMessage: Message = {
-            id: Date.now().toString(),
-            text: newMessage,
-            sender: "user",
-            timestamp: new Date(),
+        const userMessage: ChatMessageRequest = {
+            messageType: "user",
+            content: newMessage,
         };
 
-        setMessages((prev) => [...prev, userMessage]);
+        addMessageMutation.mutate(userMessage);
         setNewMessage("");
-
-        // 模擬植物回覆
-        setTimeout(() => {
-            const plantResponses = [
-                `我覺得今天的陽光很充足！`,
-                `我想我需要一些水...`,
-                `謝謝你照顧我！`,
-                `今天的溫度剛剛好！`,
-                `我的葉子感覺有點乾燥，可以幫我噴點水嗎？`,
-                `我感覺非常健康！`,
-            ];
-
-            const randomResponse =
-                plantResponses[
-                    Math.floor(Math.random() * plantResponses.length)
-                ];
-
-            const plantMessage: Message = {
-                id: Date.now().toString(),
-                text: randomResponse,
-                sender: "plant",
-                timestamp: new Date(),
-            };
-
-            setMessages((prev) => [...prev, plantMessage]);
-        }, 1000);
     };
 
     return (
@@ -84,14 +46,14 @@ export const PlantChatSection: React.FC<PlantChatSectionProps> = ({
                         <div
                             key={message.id}
                             className={`max-w-3/4 ${
-                                message.sender === "user"
+                                message.messageType === "user"
                                     ? "ml-auto bg-blue-500 text-white"
                                     : "mr-auto bg-gray-100"
                             } p-3 rounded-lg`}
                         >
-                            <Text size="sm">{message.text}</Text>
+                            <Text size="sm">{message.content}</Text>
                             <Text size="xs" c="dimmed" className="text-right">
-                                {message.timestamp.toLocaleTimeString()}
+                                {new Date(message.timestamp).toLocaleString()}
                             </Text>
                         </div>
                     ))}

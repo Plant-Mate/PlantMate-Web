@@ -214,7 +214,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
                             </Tabs.Panel>
 
                             <Tabs.Panel value="chat">
-                                <PlantChatSection plantName={plant.name} />
+                                <PlantChatSection plantId={plant.id} />
                             </Tabs.Panel>
 
                             <Tabs.Panel value="data">
