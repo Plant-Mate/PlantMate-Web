@@ -35,8 +35,8 @@ export default function Home() {
                             cols={{ base: 1, sm: 2, md: 3 }}
                             spacing="md"
                         >
-                            {(plants ?? []).map((plant, _) => (
-                                <div key={_}>
+                            {(plants ?? []).map((plant) => (
+                                <div key={plant._id}>
                                     <PlantCard
                                         plant={plant}
                                         onLinkSensor={(
