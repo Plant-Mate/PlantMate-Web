@@ -1,11 +1,7 @@
 export interface SensorData {
+    id: string;
     soilMoisture: number;
     temperature: number;
     humidity: number;
     lastUpdated: string;
-}
-
-export interface Sensor {
-    id: string;
-    sensorDatas: SensorData[];
 }

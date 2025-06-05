@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Modal, Button, Group, Stepper, TextInput } from "@mantine/core";
-import type { Plant } from "../../models/entity/Plant";
+import type { PlantRequest } from "@/models/dto/PlantDto";
 
 interface AddPlantModalProps {
     opened: boolean;
     onClose: () => void;
-    onAddPlant: (plant: Omit<Plant, "id" | "createdAt">) => void;
+    onAddPlant: (plant: PlantRequest) => void;
 }
 
 export const AddPlantModal: React.FC<AddPlantModalProps> = ({
@@ -38,7 +38,6 @@ export const AddPlantModal: React.FC<AddPlantModalProps> = ({
             name: plantData.name,
             species: plantData.species,
             description: plantData.description,
-            linkedSensor: null,
         });
 
         // 重置表單

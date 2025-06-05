@@ -2,6 +2,7 @@ export interface PlantRequest {
     name: string;
     species: string;
     description: string;
+    sensorId?: string | null;
 }
 
 export interface PlantResponse {

@@ -1,5 +1,4 @@
 import { PlantRequest, PlantResponse } from "@/models/dto/PlantDto";
-const SENSOR_KEY = "plantmate_sensors";
 
 // 獲取所有植物
 export const getAllPlants = async (): Promise<PlantResponse[]> => {
@@ -78,26 +77,4 @@ export const linkSensor = async (
 
     const data: PlantResponse = await res.json();
     return data;
-};
-
-// 生成模擬感測器數據
-export const generateMockSensorData = async (
-    plantId: string
-): Promise<void> => {
-    const plant = await getPlantById(plantId);
-    if (!plant || !plant.sensorId) return;
-
-    const sensorKey = `${SENSOR_KEY}_${plant.sensorId}`;
-    const prevData = localStorage.getItem(sensorKey);
-    const dataList = prevData ? JSON.parse(prevData) : [];
-
-    const newSensorData = {
-        soilMoisture: Math.floor(Math.random() * 100),
-        temperature: Math.floor(Math.random() * 15) + 20, // 20-35℃
-        humidity: Math.floor(Math.random() * 50) + 30, // 30-80%
-        lastUpdated: new Date().toISOString(),
-    };
-
-    dataList.push(newSensorData);
-    localStorage.setItem(sensorKey, JSON.stringify(dataList));
 };
