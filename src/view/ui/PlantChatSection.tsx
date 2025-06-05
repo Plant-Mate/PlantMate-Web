@@ -47,12 +47,16 @@ export const PlantChatSection: React.FC<PlantChatSectionProps> = ({
                             key={message.id}
                             className={`max-w-3/4 ${
                                 message.messageType === "user"
-                                    ? "ml-auto bg-blue-500 text-white"
+                                    ? "ml-auto bg-blue-400 text-white"
                                     : "mr-auto bg-gray-100"
                             } p-3 rounded-lg`}
                         >
                             <Text size="sm">{message.content}</Text>
-                            <Text size="xs" c="dimmed" className="text-right">
+                            <Text
+                                size="xs"
+                                // c="dimmed"
+                                className="text-right"
+                            >
                                 {new Date(message.timestamp).toLocaleString()}
                             </Text>
                         </div>
