@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Text, Button, Group, Modal, TextInput } from "@mantine/core";
-import { Plant } from "../../model/entity/plant";
+import { Plant } from "../../models/entity/Plant";
 import Link from "next/link";
 import { IconArrowRight } from "@tabler/icons-react";
 interface PlantCardProps {

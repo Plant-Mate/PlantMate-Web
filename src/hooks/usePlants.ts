@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { Plant } from "../model/entity/plant";
-import { plantService } from "../model/service/plantService";
+import { Plant } from "../models/entity/Plant";
+import { plantService } from "../models/service/plantService";
 
 export const usePlants = () => {
     const [plants, setPlants] = useState<Plant[]>([]);

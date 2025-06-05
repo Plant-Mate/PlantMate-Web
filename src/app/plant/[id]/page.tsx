@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import { AppHeader } from "../../../view/ui/AppHeader";
 import { usePlants } from "../../../hooks/usePlants";
-import { Plant } from "../../../model/entity/plant";
+import { Plant } from "../../../models/entity/Plant";
 import { PlantChatSection } from "../../../view/ui/PlantChatSection";
 import { PlantDataSection } from "../../../view/ui/PlantDataSection";
 

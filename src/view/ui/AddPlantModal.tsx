@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Group, Stepper, TextInput } from "@mantine/core";
-import type { Plant } from "../../model/entity/plant";
+import type { Plant } from "../../models/entity/Plant";
 
 interface AddPlantModalProps {
     opened: boolean;
