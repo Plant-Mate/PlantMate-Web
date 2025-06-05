@@ -1,4 +1,5 @@
 import { PlantRequest, PlantResponse } from "@/models/dto/PlantDto";
+
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 function mapPlantResponse(data: unknown): PlantResponse {
