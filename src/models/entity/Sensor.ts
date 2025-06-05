@@ -1,5 +1,5 @@
 export interface SensorData {
-    id: string;
+    _id: string;
     soilMoisture: number;
     temperature: number;
     humidity: number;

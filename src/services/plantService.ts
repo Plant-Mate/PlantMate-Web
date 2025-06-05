@@ -21,7 +21,7 @@ export const getPlantById = async (
 ): Promise<PlantResponse | null> => {
     const plants = await getAllPlants();
     console.log("Fetching plant by ID: ", id);
-    return plants.find((plant) => plant.id === id) || null;
+    return plants.find((plant) => plant._id === id) || null;
 };
 
 // 新增植物

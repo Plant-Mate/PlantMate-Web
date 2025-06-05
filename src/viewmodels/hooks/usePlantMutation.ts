@@ -31,7 +31,7 @@ export const usePlantMutations = () => {
             queryClient.setQueryData<PlantResponse[]>(["plants"], (old) =>
                 old
                     ? old.map((p) =>
-                          p.id === updatedPlant.id ? updatedPlant : p
+                          p._id === updatedPlant._id ? updatedPlant : p
                       )
                     : []
             );
@@ -43,7 +43,7 @@ export const usePlantMutations = () => {
         mutationFn: deletePlant,
         onSuccess: (_data, deletedId) => {
             queryClient.setQueryData<PlantResponse[]>(["plants"], (old) =>
-                old ? old.filter((p) => p.id !== deletedId) : []
+                old ? old.filter((p) => p._id !== deletedId) : []
             );
         },
     });
@@ -59,7 +59,7 @@ export const usePlantMutations = () => {
             queryClient.setQueryData<PlantResponse[]>(["plants"], (old) =>
                 old
                     ? old.map((p) =>
-                          p.id === updatedPlant.id ? updatedPlant : p
+                          p._id === updatedPlant._id ? updatedPlant : p
                       )
                     : []
             );

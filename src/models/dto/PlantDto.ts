@@ -6,7 +6,7 @@ export interface PlantRequest {
 }
 
 export interface PlantResponse {
-    id: string;
+    _id: string;
     name: string;
     species: string;
     description: string;

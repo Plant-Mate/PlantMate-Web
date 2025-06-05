@@ -42,7 +42,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
     const [, setAddModalOpen] = useState(false);
 
     useEffect(() => {
-        const plant = plants?.find((p) => p.id === id);
+        const plant = plants?.find((p) => p._id === id);
         if (plant) {
             setPlant(plant);
             setEditData({
@@ -69,7 +69,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
         if (!plant) return;
 
         const updatedPlant = await updatePlantAsync({
-            id: plant.id,
+            id: plant._id,
             data: editData,
         });
 
@@ -218,7 +218,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
                             </Tabs.Panel>
 
                             <Tabs.Panel value="data">
-                                <PlantDataSection plantId={plant.id} />
+                                <PlantDataSection plantId={plant._id} />
                             </Tabs.Panel>
                         </Paper>
                     </Tabs>
