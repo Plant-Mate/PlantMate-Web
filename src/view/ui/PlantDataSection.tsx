@@ -188,7 +188,7 @@ export const PlantDataSection: React.FC<PlantDataSectionProps> = ({
             </div>
 
             <Grid>
-                <Grid.Col span={{ base: 12, md: 12 }}>
+                {/* <Grid.Col span={{ base: 12, md: 12 }}>
                     <Paper withBorder p="md">
                         {renderMetricChart(
                             "soilMoisture",
@@ -196,7 +196,7 @@ export const PlantDataSection: React.FC<PlantDataSectionProps> = ({
                             "#3498db"
                         )}
                     </Paper>
-                </Grid.Col>
+                </Grid.Col> */}
 
                 <Grid.Col span={{ base: 12, md: 12 }}>
                     <Paper withBorder p="md">

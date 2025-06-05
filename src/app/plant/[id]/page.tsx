@@ -10,6 +10,8 @@ import {
     Paper,
     Tabs,
     TextInput,
+    Modal,
+    Group,
 } from "@mantine/core";
 import { AppHeader } from "../../../view/ui/AppHeader";
 import { Plant } from "../../../models/entity/Plant";
@@ -32,7 +34,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
 
     const router = useRouter();
     const { data: plants } = usePlantsQuery();
-    const { updatePlantAsync } = usePlantMutations();
+    const { updatePlantAsync, deletePlantAsync } = usePlantMutations();
     const [plant, setPlant] = useState<Plant | null>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [editData, setEditData] = useState({
@@ -41,6 +43,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
         description: "",
     });
     const [, setAddModalOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     useEffect(() => {
         const plant = plants?.find((p) => p.id === id);
@@ -80,6 +83,17 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
         }
     };
 
+    const handleDeletePlant = async () => {
+        if (!plant) return;
+
+        try {
+            await deletePlantAsync(plant.id);
+            router.push("/");
+        } catch (error) {
+            console.error("Failed to delete plant:", error);
+        }
+    };
+
     if (!plant) {
         return (
             <AppShell header={{ height: 60 }} padding="md">
@@ -95,7 +109,10 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
 
     return (
         <AppShell header={{ height: 60 }} padding="md">
-            <AppHeader onAddClick={() => setAddModalOpen(true)} />
+            <AppHeader
+                onAddClick={() => setAddModalOpen(true)}
+                showBackButton={true}
+            />
             <AppShell.Main pt={20}>
                 <Container>
                     <div className="mb-6 flex justify-between items-center">
@@ -202,7 +219,16 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
                                                 ).toLocaleString()}
                                             </Text>
                                         </div>
-                                        <div className="flex justify-end">
+                                        <div className="flex justify-between">
+                                            <Button
+                                                color="red"
+                                                variant="outline"
+                                                onClick={() =>
+                                                    setDeleteModalOpen(true)
+                                                }
+                                            >
+                                                刪除植物
+                                            </Button>
                                             <Button
                                                 onClick={() =>
                                                     setIsEditing(true)
@@ -228,6 +254,32 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
                             </Tabs.Panel>
                         </Paper>
                     </Tabs>
+
+                    {/* Delete Confirmation Modal */}
+                    <Modal
+                        opened={deleteModalOpen}
+                        onClose={() => setDeleteModalOpen(false)}
+                        title="確認刪除植物"
+                        centered
+                    >
+                        <div className="space-y-4">
+                            <Text>確定要刪除植物「{plant.name}」嗎？</Text>
+                            <Text size="sm" c="red">
+                                刪除後將無法復原，所有相關資料都會被永久刪除。
+                            </Text>
+                            <Group justify="flex-end">
+                                <Button
+                                    variant="default"
+                                    onClick={() => setDeleteModalOpen(false)}
+                                >
+                                    取消
+                                </Button>
+                                <Button color="red" onClick={handleDeletePlant}>
+                                    確認刪除
+                                </Button>
+                            </Group>
+                        </div>
+                    </Modal>
                 </Container>
             </AppShell.Main>
         </AppShell>
