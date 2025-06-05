@@ -1,5 +1,25 @@
 import { SensorData } from "@/models/entity/Sensor";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 const SENSOR_KEY = "plantmate_sensors";
+
+// export const getSensorData = async (id: string): Promise<SensorData[]> => {
+//     const res = await fetch(`${BACKEND_URL}/api/sensors/${id}`, {
+//         method: "GET",
+//         headers: { "Content-Type": "application/json" },
+//     });
+
+//     if (!res.ok) throw new Error("Failed to fetch");
+//     console.log("Fetching sensor data for ID: ", id);
+
+//     const data = await res.json();
+//     return data.map((d) => ({
+//         id: d.sensor_id as string,
+//         temperature: d.temperature as number,
+//         humidity: d.humidity as number,
+//         soilMoisture: d.soil_moisture as number,
+//     }));
+// };
 
 // 獲取感測器數據
 export const getSensorData = async (id: string): Promise<SensorData[]> => {
