@@ -1,5 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addPlant, deletePlant, updatePlant } from "@/services/plantService";
+import {
+    addPlant,
+    deletePlant,
+    updatePlant,
+    linkSensor,
+} from "@/services/plantService";
 import { PlantRequest, PlantResponse } from "@/models/dto/PlantDto";
 
 export const usePlantMutations = () => {
@@ -43,6 +48,24 @@ export const usePlantMutations = () => {
         },
     });
 
+    // 連結感測器
+    const link = useMutation<
+        PlantResponse,
+        Error,
+        { plantId: string; sensorId: string }
+    >({
+        mutationFn: ({ plantId, sensorId }) => linkSensor(plantId, sensorId),
+        onSuccess: (updatedPlant) => {
+            queryClient.setQueryData<PlantResponse[]>(["plants"], (old) =>
+                old
+                    ? old.map((p) =>
+                          p.id === updatedPlant.id ? updatedPlant : p
+                      )
+                    : []
+            );
+        },
+    });
+
     return {
         // Add
         addPlant: add.mutate,
@@ -58,5 +81,10 @@ export const usePlantMutations = () => {
         deletePlant: remove.mutate,
         deletePlantAsync: remove.mutateAsync,
         isDeleting: remove.isPending,
+
+        // Link Sensor
+        linkSensor: link.mutate,
+        linkSensorAsync: link.mutateAsync,
+        isLinkingSensor: link.isPending,
     };
 };

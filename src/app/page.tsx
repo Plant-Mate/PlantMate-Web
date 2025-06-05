@@ -5,18 +5,20 @@ import { AppShell, Container, Text, Button, SimpleGrid } from "@mantine/core";
 import { AppHeader } from "../view/ui/AppHeader";
 import { PlantCard } from "../view/ui/PlantCard";
 import { AddPlantModal } from "../view/ui/AddPlantModal";
-import { usePlants } from "../viewmodels/usePlants";
+import { usePlantsQuery } from "@/viewmodels/hooks/usePlantsQuery";
+import { usePlantMutations } from "@/viewmodels/hooks/usePlantMutation";
 
 export default function Home() {
     const [addModalOpen, setAddModalOpen] = useState(false);
-    const { plants, loading, addPlant, linkSensor } = usePlants();
+    const { data: plants, isLoading: loading } = usePlantsQuery();
+    const { addPlant, linkSensor } = usePlantMutations();
 
     return (
         <AppShell header={{ height: 60 }} padding="md">
             <AppHeader onAddClick={() => setAddModalOpen(true)} />
             <AppShell.Main>
                 <Container>
-                    {plants.length === 0 && !loading ? (
+                    {plants && plants.length === 0 && !loading ? (
                         <div className="flex flex-col items-center justify-center py-20">
                             <Text size="xl" fw={500} mb="xl">
                                 目前無植物
@@ -33,11 +35,14 @@ export default function Home() {
                             cols={{ base: 1, sm: 2, md: 3 }}
                             spacing="md"
                         >
-                            {plants.map((plant) => (
+                            {(plants ?? []).map((plant) => (
                                 <PlantCard
                                     key={plant.id}
                                     plant={plant}
-                                    onLinkSensor={linkSensor}
+                                    onLinkSensor={(
+                                        plantId: string,
+                                        sensorId: string
+                                    ) => linkSensor({ plantId, sensorId })}
                                 />
                             ))}
                         </SimpleGrid>

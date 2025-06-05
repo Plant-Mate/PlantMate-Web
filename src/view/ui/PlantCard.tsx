@@ -38,7 +38,7 @@ export const PlantCard: React.FC<PlantCardProps> = ({
                                 {plant.species}
                             </Text>
 
-                            {plant.linkedSensor && plant.sensorData && (
+                            {plant.sensorId && plant.sensorData && (
                                 <div className="mt-4 space-y-1">
                                     <Text size="sm">
                                         土壤濕度:{" "}
@@ -64,7 +64,7 @@ export const PlantCard: React.FC<PlantCardProps> = ({
                                 </Button>
                             </Link>
 
-                            {!plant.linkedSensor && (
+                            {!plant.sensorId && (
                                 <Button
                                     variant="outline"
                                     size="sm"
