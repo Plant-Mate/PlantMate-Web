@@ -15,6 +15,7 @@ import { AppHeader } from "../../../view/ui/AppHeader";
 import { Plant } from "../../../models/entity/Plant";
 import { PlantChatSection } from "../../../view/ui/PlantChatSection";
 import { PlantDataSection } from "../../../view/ui/PlantDataSection";
+import { PlantCareAdviceSection } from "../../../view/ui/PlantCareAdviceSection";
 import { usePlantsQuery } from "@/viewmodels/hooks/usePlantsQuery";
 import { usePlantMutations } from "@/viewmodels/hooks/usePlantMutation";
 
@@ -117,6 +118,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
                             <Tabs.Tab value="info">基本資訊</Tabs.Tab>
                             <Tabs.Tab value="chat">聊天室</Tabs.Tab>
                             <Tabs.Tab value="data">觀測數據</Tabs.Tab>
+                            <Tabs.Tab value="care">每日照護建議</Tabs.Tab>
                         </Tabs.List>
 
                         <Paper p="md" mt="md" radius="md" withBorder>
@@ -219,6 +221,10 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
 
                             <Tabs.Panel value="data">
                                 <PlantDataSection plantId={plant.id} />
+                            </Tabs.Panel>
+
+                            <Tabs.Panel value="care">
+                                <PlantCareAdviceSection plantId={plant.id} />
                             </Tabs.Panel>
                         </Paper>
                     </Tabs>
