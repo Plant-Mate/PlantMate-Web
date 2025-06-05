@@ -22,7 +22,7 @@ export const PlantCard: React.FC<PlantCardProps> = ({
     const handleLinkSensor = () => {
         if (!sensorId) return;
 
-        onLinkSensor(plant._id, sensorId);
+        onLinkSensor(plant.id, sensorId);
         setLinkModalOpen(false);
     };
 
@@ -69,7 +69,7 @@ export const PlantCard: React.FC<PlantCardProps> = ({
                                 )}
                         </div>
                         <div className="flex flex-col gap-2 items-end">
-                            <Link href={`/plant/${plant._id}`} passHref>
+                            <Link href={`/plant/${plant.id}`} passHref>
                                 <Button variant="subtle" size="sm">
                                     <IconArrowRight
                                         size={20}

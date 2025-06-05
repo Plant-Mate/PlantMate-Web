@@ -36,7 +36,7 @@ export default function Home() {
                             spacing="md"
                         >
                             {(plants ?? []).map((plant) => (
-                                <div key={plant._id}>
+                                <div key={plant.id}>
                                     <PlantCard
                                         plant={plant}
                                         onLinkSensor={(

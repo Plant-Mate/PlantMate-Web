@@ -26,8 +26,8 @@ interface PlantDetailPageProps {
 
 export default function PlantDetailPage({ params }: PlantDetailPageProps) {
     // 使用 React.use() 解析 params
-    // const resolvedParams = React.use(params as any);
-    const id = params.id;
+    const resolvedParams = React.use(params);
+    const id = resolvedParams.id;
 
     const router = useRouter();
     const { data: plants } = usePlantsQuery();
@@ -42,7 +42,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
     const [, setAddModalOpen] = useState(false);
 
     useEffect(() => {
-        const plant = plants?.find((p) => p._id === id);
+        const plant = plants?.find((p) => p.id === id);
         if (plant) {
             setPlant(plant);
             setEditData({
@@ -69,7 +69,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
         if (!plant) return;
 
         const updatedPlant = await updatePlantAsync({
-            id: plant._id,
+            id: plant.id,
             data: editData,
         });
 
@@ -218,7 +218,7 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
                             </Tabs.Panel>
 
                             <Tabs.Panel value="data">
-                                <PlantDataSection plantId={plant._id} />
+                                <PlantDataSection plantId={plant.id} />
                             </Tabs.Panel>
                         </Paper>
                     </Tabs>
