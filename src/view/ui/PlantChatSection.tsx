@@ -39,26 +39,35 @@ export const PlantChatSection: React.FC<PlantChatSectionProps> = ({
     };
 
     return (
-        <div className="flex flex-col h-full">
-            <ScrollArea h={400} viewportRef={viewport}>
+        <div
+            className="flex flex-col"
+            style={{ height: "calc(100vh - 250px)" }}
+        >
+            <ScrollArea style={{ flex: 1 }} viewportRef={viewport}>
                 <div className="p-4 space-y-4">
                     {messages.map((message) => (
                         <div
                             key={message.id}
-                            className={`max-w-3/4 ${
+                            className={`flex ${
                                 message.messageType === "user"
-                                    ? "ml-auto bg-blue-400 text-white"
-                                    : "mr-auto bg-gray-100"
-                            } p-3 rounded-lg`}
+                                    ? "justify-end"
+                                    : "justify-start"
+                            }`}
                         >
-                            <Text size="sm">{message.content}</Text>
-                            <Text
-                                size="xs"
-                                // c="dimmed"
-                                className="text-right"
+                            <div
+                                className={`inline-block max-w-xs sm:max-w-sm md:max-w-lg ${
+                                    message.messageType === "user"
+                                        ? "bg-blue-400 text-white"
+                                        : "bg-gray-100"
+                                } p-3 rounded-lg`}
                             >
-                                {new Date(message.timestamp).toLocaleString()}
-                            </Text>
+                                <Text size="sm">{message.content}</Text>
+                                <Text size="xs" className="text-right mt-1">
+                                    {new Date(
+                                        message.timestamp
+                                    ).toLocaleString()}
+                                </Text>
+                            </div>
                         </div>
                     ))}
                 </div>
