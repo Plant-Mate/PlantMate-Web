@@ -1,4 +1,4 @@
-import { PlantRequest, PlantResponse } from "../dto/PlantDto";
+import { PlantRequest, PlantResponse } from "@/models/dto/PlantDto";
 const SENSOR_KEY = "plantmate_sensors";
 
 // 獲取所有植物

@@ -12,7 +12,7 @@ import {
     TextInput,
 } from "@mantine/core";
 import { AppHeader } from "../../../view/ui/AppHeader";
-import { usePlants } from "../../../hooks/usePlants";
+import { usePlants } from "../../../viewmodels/usePlants";
 import { Plant } from "../../../models/entity/Plant";
 import { PlantChatSection } from "../../../view/ui/PlantChatSection";
 import { PlantDataSection } from "../../../view/ui/PlantDataSection";
@@ -179,8 +179,8 @@ export default function PlantDetailPage({ params }: PlantDetailPageProps) {
                                                 感測器狀態
                                             </Text>
                                             <Text size="lg">
-                                                {plant.linkedSensor
-                                                    ? `已連結 (${plant.linkedSensor})`
+                                                {plant.sensorId
+                                                    ? `已連結 (${plant.sensorId})`
                                                     : "未連結"}
                                             </Text>
                                         </div>

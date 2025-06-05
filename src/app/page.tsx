@@ -5,7 +5,7 @@ import { AppShell, Container, Text, Button, SimpleGrid } from "@mantine/core";
 import { AppHeader } from "../view/ui/AppHeader";
 import { PlantCard } from "../view/ui/PlantCard";
 import { AddPlantModal } from "../view/ui/AddPlantModal";
-import { usePlants } from "../hooks/usePlants";
+import { usePlants } from "../viewmodels/usePlants";
 
 export default function Home() {
     const [addModalOpen, setAddModalOpen] = useState(false);
